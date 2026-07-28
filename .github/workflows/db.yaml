@@ -23,6 +23,7 @@ jobs:
             - name: login to ecr
               id: ecr-login
               uses: aws-actions/amazon-ecr-login@v2
+            - name: build and push to ecr
               env:
                 REGISTORY: ${{steps.ecr-login.output.registory}}
                 REPOSITORY: book-inventory/book-inventory-db
