@@ -29,8 +29,8 @@ jobs:
                 REPOSITORY: book-inventory/book-inventory-db
                 TAG: latest
               run: |
-                docker build -t $REGISTORY/REPOSITORY:$TAG .
-                docker push $REGISTORY/REPOSITORY:$TAG
+                docker build -t $REGISTORY/$REPOSITORY:$TAG .
+                docker push $REGISTORY/$REPOSITORY:$TAG
                
               
 
