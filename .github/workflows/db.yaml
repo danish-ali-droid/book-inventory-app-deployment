@@ -23,6 +23,13 @@ jobs:
             - name: login to ecr
               id: ecr-login
               uses: aws-actions/amazon-ecr-login@v2
-
-  
+              env:
+                REGISTORY: ${{steps.ecr-login.output.registory}}
+                REPOSITORY: book-inventory/book-inventory-db
+                TAG: latest
+              run: |
+                docker build -t $REGISTORY/REPOSITORY:$TAG .
+                docker push $REGISTORY/REPOSITORY:$TAG
+               
+              
 
