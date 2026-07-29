@@ -1,0 +1,49 @@
+name: backend pipeline
+on:
+  push:
+    branches: [main]
+    paths: '/backend'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults: 
+     run:
+       working-directory: 'backend'
+    steps:
+      - name: check out the code
+        uses: actions/checkout@v4
+      - name: setup the python 
+        uses: actions/setup-python@v6
+        with:
+          version: '3.12'
+      - name: test the python
+        run: pytest app.py
+  build-and-push:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+       working-directory: 'backend'
+    steps:
+      - name: check out the code
+        uses: actions/checkout@v4
+      - name: configure aws
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+      - name: login to ecr
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: build, tag and push to ecr
+        env:
+          REGISTRY: ${{steps.ecr-login.outputs.registry}}
+          REPOSITORY: book-inventory/book-inventory-backend
+          TAG: latest
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$TAG .
+          docker push  $REGISTRY/$REPOSITORY:$TAG
+
+
+
