@@ -31,6 +31,21 @@ jobs:
               run: |
                 docker build -t $REGISTORY/$REPOSITORY:$TAG .
                 docker push $REGISTORY/$REPOSITORY:$TAG
-               
-              
+  deploy: 
+      needs: build-and-push    
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: 'database/**'
+      steps:
+        - name: login to db server
+          action: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.DB_VM_HOST}}
+            username: ${{ secrets.DB_VM_USER}}
+            password: ${{secrets.DB_VM_KEY}}
+            port: ${{secrets.PORT}}
+            script:  |
+              echo "login successfull"
+        
 
