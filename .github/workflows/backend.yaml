@@ -2,7 +2,7 @@ name: backend pipeline
 on:
   push:
     branches: [main]
-    paths: '/backend'
+    paths: 'backend/**'
   workflow_dispatch:
 jobs:
   test:
@@ -20,7 +20,7 @@ jobs:
       - name: install deps
         run: pip install -r requirements.txt
       - name: test the python
-        run: pytest 
+        run: pytest test_app.py 
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
