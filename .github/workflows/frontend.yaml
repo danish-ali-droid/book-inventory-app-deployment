@@ -51,7 +51,7 @@ jobs:
         REPOSITORY: book-inventory/book-inventory-frontend
         TAG: latest
        run:  |
-       docker build -t $REGISTRY/$REPOSITORY:$TAG .
-       docker push  $REGISTRY/$REPOSITORY:$TAG
+        docker build -t $REGISTRY/$REPOSITORY:$TAG .
+        docker push  $REGISTRY/$REPOSITORY:$TAG
 
 
