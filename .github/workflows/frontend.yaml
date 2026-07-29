@@ -18,9 +18,9 @@ jobs:
        run: npm install
      - name: run build
        run: npm run build
- test:
-   runs-on: ubuntu-latest
-   steps:
+  test:
+    runs-on: ubuntu-latest
+    steps:
      - name: checkout the code
        uses: actions/checkout@v4
      - name: setup node
@@ -31,9 +31,9 @@ jobs:
        run: npm install
      - name: run test
        run: npm test
- build-push:
-   runs-on: ubuntu-latest
-   steps:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
      - name: checkout the code
        uses: actions/checkout@v4
      - name: configure aws
