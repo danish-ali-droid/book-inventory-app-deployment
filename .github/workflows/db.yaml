@@ -51,7 +51,7 @@ jobs:
             password: ${{secrets.DB_VM_KEY}}
             port: ${{secrets.PORT}}
             script:  |
-               set -e 
+              set -e 
               echo "login successfull..."
                if ! command aws 2> /dev/null; then
                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -63,7 +63,9 @@ jobs:
                export AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}}
                export AWS_REGION=${{secrets.AWS_REGION}}
                REGISTRY="${{secrets.AWS_ACCESS_KEY_ID}}.dkr.ecr.$AWS_REGION.amazonaws.com"
-               aws ecr  get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCESS_KEY_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+               aws ecr  get-login-password --region $AWS_REGION | docker login \
+               --username AWS --password-stdin \
+               $AWS_ACCESS_KEY_ID.dkr.ecr.$AWS_REGION.amazonaws.com
                PARAM_PATH="/prod/secrets"
                aws ssm get-parameters-by-path \
                --path "$PARAM_PATH" \
