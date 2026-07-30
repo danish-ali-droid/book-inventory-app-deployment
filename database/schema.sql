@@ -12,7 +12,7 @@
 -- =============================================
 -- Drop existing tables if they exist
 -- =============================================
-DROP TABLE IF EXISTS books CASCADE;
+-- DROP TABLE IF EXISTS books CASCADE;
 
 -- =============================================
 -- Create Books Table
