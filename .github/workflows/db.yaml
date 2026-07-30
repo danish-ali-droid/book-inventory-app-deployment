@@ -57,7 +57,7 @@ jobs:
                export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}}
                export AWS_DEFAULT_REGION=${{secrets.AWS_REGION}}
                aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${{secrets.DB_ECR_REGISTORY}}
-               cat << EOF >> .env
+               cat << EOF >.env
                POSTGRES_USER=${{secrets.DB_USER}}
                export POSTGRES_PASSWORD=${{secrets.DB_PASSWORD}}
                export POSTGRES_DB=${{secrets.DB_NAME}}
