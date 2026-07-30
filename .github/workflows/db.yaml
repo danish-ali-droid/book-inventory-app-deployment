@@ -58,7 +58,7 @@ jobs:
                export AWS_DEFAULT_REGION=${{secrets.AWS_REGION}}
                aws ecr  get-login-password --region $AWS_DEFAULT_REGION | docker login \
                --username AWS --password-stdin \
-               $AWS_ACCESS_KEY_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+               ${{secrets.DB_ECR_REGISTORY}}
                PARAM_PATH="/prod/secrets"
                aws ssm get-parameters-by-path \
                --path "$PARAM_PATH" \
