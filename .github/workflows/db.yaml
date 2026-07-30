@@ -71,10 +71,10 @@ jobs:
                docker stop book-db || true
                docker rm book-db || true
                docker volume create book_db_volume
-               docker pull ${{secrets.DB_ECR_REGISTORY}}/book-inventory/book-inventory-db:latest
+               docker pull ${{secrets.DB_ECR_REGISTORY}}:latest
                docker run -d --name book-db --env-file .env -p 5432:5432 \
                -v book_db_volume:/var/lib/postgresql/data \  
-               ${{secrets.DB_ECR_REGISTORY}}/book-inventory/book-inventory-db:latest
+               ${{secrets.DB_ECR_REGISTORY}}:latest
                unset AWS_ACCESS_KEY_ID
                unset AWS_SECRET_ACCESS_KEY 
                echo  "container deployed successfully"
