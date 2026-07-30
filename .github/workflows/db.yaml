@@ -51,6 +51,7 @@ jobs:
             password: ${{secrets.DB_VM_KEY}}
             port: ${{secrets.PORT}}
             script:  |
+               set -e 
               echo "login successfull..."
                if ! command aws 2> /dev/null; then
                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -78,7 +79,10 @@ jobs:
                docker rm book-db || true
                docker volume create book_db_volume
                docker pull $REGISTRY/book-inventory/book-inventory-db:latest
-               docker run -d --name book-db --env-file .env -p 5432:5432 -v book_db_volume:/var/lib/postgresql/data $REGISTRY/book-inventory/book-inventory-db:latest
+               docker run -d \ 
+               --name book-db --env-file .env -p 5432:5432 \
+               -v book_db_volume:/var/lib/postgresql/data \  
+               $REGISTRY/book-inventory/book-inventory-db:latest
                unset AWS_ACCESS_KEY_ID
                unset AWS_SECRET_ACCESS_KEY 
                echo  "container deployed successfully"
