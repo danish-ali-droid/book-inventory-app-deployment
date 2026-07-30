@@ -64,9 +64,10 @@ jobs:
                --recursive \
                --query "Parameters[*].[Name,Value]" \
                --output text | while read -r name value; do
-               key=$(echo "$name" | awk -F'/' '{print $NF}')
-               echo "${key}=${value}" >> .env
-               export "${key}=${value}"
+               if [ -n "$name" ]; then
+                    key=$(basename "$name")
+                    echo "${key}=${value}" >> .env
+                  fi                         
                done
                docker stop book-db || true
                docker rm book-db || true
