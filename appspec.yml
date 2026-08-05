@@ -1,0 +1,11 @@
+version: 0.0
+files:
+  -  source: /scripts
+     destinantion: /home/ec2-user/deploy-script
+hooks:
+  ApplicationStart:
+    - location: script/deploy.sh
+      timeout: 300
+      runas: root
+
+
