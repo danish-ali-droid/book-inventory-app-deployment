@@ -1,4 +1,5 @@
 version: 0.0
+os: linux
 files:
   -  source: /scripts
      destinantion: /home/ec2-user/deploy-script
