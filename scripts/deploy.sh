@@ -11,7 +11,7 @@ REGISTRIES_JSON=$(aws secretsmanager get-secret-value \
 FRONTEND_REGISTRY=$(echo $REGISTRIES_JSON | jq -r '.FRONTEND_REGISTRY')
 IMAGE=$FRONTEND_REGISTRY:latest
 
-aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $FRONTEND_REGISTORY
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $FRONTEND_REGISTRY
  docker pull $IMAGE
  if [ $(docker ps -a -q -f name=frontend-container) ]; then 
  docker stop frontend-container
