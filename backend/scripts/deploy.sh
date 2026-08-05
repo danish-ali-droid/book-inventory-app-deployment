@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
-AWS_REGION=${{secrets.AWS_REGION}}
-BACKEND_REGISTORY=${{secrets.BACKEND_REGISTORY}}
-IMAGE=${{BACKEND_REGISTORY}}:latest
+
+REGISTRIES_JSON=$(aws secretsmanager get-secret-value \
+  --secret-id "prod/registries" \
+  --region $AWS_REGION \
+  --query SecretString \
+  --output text)
+AWS_REGION=eu-north-1
+BACKEND_REGISTRY=$(echo $REGISTRIES_JSON | jq -r '.BACKEND_REGISTRY')
+IMAGE=$BACKEND_REGISTRY:latest
 
 aws ecr login --region $AWS_REGION | docker login --username AWS --pasword-sdtin $BACKEND_REGISTORY
 aws ecr login --region $AWS_REGION | docker login --username AWS --pasword-stdin $BACKEND_REGISTORY

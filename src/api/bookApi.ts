@@ -3,7 +3,7 @@
  * Handles all API calls to the Flask backend
  */
 
-const API_BASE_URL = 'http://my-book-store-backend:5000/api';
+const API_BASE_URL = 'internal-backend-asg-1-794001980.eu-north-1.elb.amazonaws.com';
 
 export interface Book {
   id?: number;
