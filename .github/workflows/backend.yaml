@@ -47,6 +47,32 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$TAG .
           docker push  $REGISTRY/$REPOSITORY:$TAG
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+       working-directory: 'backend'
+    steps:
+      - name: checkout code
+         uses: actions/checkout@v4
+       - name: login to aws
+         uses: aws-actions/configure-aws-credentials@v2
+         with:
+           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+           aws-secret-access-key: ${{secrets.AWS_ACCESS_KEY}}
+           aws-region: ${{secrets.AWS_REGION}}
+       - name: zip the file
+         run: zip -r  deploy.zip   appspec.yml  scripts/
+       - name: upload zip to s3 bucket
+         run: |
+             aws s3 cp deploy.zip s3://book-inventory-bucket-1/backend/deploy.zip
+       - name: Trigger AWS CodeDeploy Deployment
+         run: |
+             aws deploy create-deployment \
+             --application-name code-deploy-frontend \
+             --deployment-group-name backend-dg \
+             --s3-location bucket=book-inventory-bucket-1,key=backend/deploy.zip,bundleType=zip
 
 
 
