@@ -70,7 +70,7 @@ jobs:
       - name: Trigger AWS CodeDeploy Deployment
         run: |
              aws deploy create-deployment \
-             --application-name code-deploy-frontend \
+             --application-name backend-application \
              --deployment-group-name backend-dg \
              --s3-location bucket=book-inventory-bucket-1,key=backend/deploy.zip,bundleType=zip
 
