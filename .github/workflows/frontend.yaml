@@ -47,7 +47,7 @@ jobs:
      - name: ecr login
        id: ecr-login
          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
-         aws-secret-access-key: ${{secrets.A: aws-actions/amazon-ecr-login@v2
+         aws-secret-access-key: ${{secrets.AWS_ACCESS_KEY}}
      - name: tag and push to ecr
        env:
         REGISTRY: ${{steps.ecr-login.outputs.registry}}
