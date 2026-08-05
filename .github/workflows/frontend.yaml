@@ -63,7 +63,7 @@ jobs:
        - name: checkout code 
          uses: actions/checkout@v4
        - name: login to aws
-         uses: aws-actions/configure-aws-cradentials@v2
+         uses: aws-actions/configure-aws-credentials@v2
          with:
            aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
            aws-secret-access-key: ${{secrets.AWS_ACCESS_KEY}}
@@ -72,11 +72,11 @@ jobs:
          run: zip -r  deploy.zip   appspec.yml  scripts/ 
        - name: upload zip to s3 bucket
          run: |
-           aws s3 cp deploy.zip s3://book-inventory-bucket-1 /frontend/deploy.zip
+             aws s3 cp deploy.zip s3://book-inventory-bucket-1 /frontend/deploy.zip
        - name: Trigger AWS CodeDeploy Deployment
          run: |
-           aws deploy create-deployment \
-            --application-name frontend-da \
-            --deployment-group-name forntend-dg \
-            --s3-location bucket=book-inventory-bucket-1,key=frontend/deploy.zip,bundleType=zip
+             aws deploy create-deployment \
+             --application-name frontend-da \
+             --deployment-group-name forntend-dg \
+             --s3-location bucket=book-inventory-bucket-1,key=frontend/deploy.zip,bundleType=zip
 
