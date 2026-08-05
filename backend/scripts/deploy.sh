@@ -10,8 +10,7 @@ AWS_REGION=eu-north-1
 BACKEND_REGISTRY=$(echo $REGISTRIES_JSON | jq -r '.BACKEND_REGISTRY')
 IMAGE=$BACKEND_REGISTRY:latest
 
-aws ecr login --region $AWS_REGION | docker login --username AWS --pasword-sdtin $BACKEND_REGISTORY
-aws ecr login --region $AWS_REGION | docker login --username AWS --pasword-stdin $BACKEND_REGISTORY
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --pasword-sdtin $BACKEND_REGISTORY
  docker pull $IMAGE
  if [$(docker ps -a -q -f name=backend-container) ]; then
  docker stop backend-container
