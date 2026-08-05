@@ -2,7 +2,7 @@
 set -e
 AWS_REGION=eu-north-1
 
-o
+
 REGISTRIES_JSON=$(aws secretsmanager get-secret-value \
   --secret-id "prod/registries" \
   --region $AWS_REGION \
